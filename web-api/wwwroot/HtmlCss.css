@@ -1,0 +1,36 @@
+﻿body {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    gap:10vh;
+}
+#signup{
+    display:none
+}
+#box {
+    height: 30vh;
+    width: 30vh;
+    background-color: aqua;
+    display: flex;
+    display: none;
+    //color:red display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    margin:2vh;
+    flex-direction:column;
+    padding:2vh;
+}
+#updatedetails {
+    //display: none;
+    height: 20vh;
+    width: 20vh;
+    //background-color: mediumvioletred;
+}
+#in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}

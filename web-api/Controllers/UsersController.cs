@@ -1,0 +1,129 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace web_api.Controllers
+{
+    
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        string Filepath = "Data.txt";
+        // GET: api/<UsersController>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "Chavi", "Giti" };
+        }
+
+        // GET api/<UsersController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            using (StreamReader reader = System.IO.File.OpenText(Filepath))
+            {
+                string? currentUserInFile;
+                while ((currentUserInFile = reader.ReadLine()) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(currentUserInFile))
+                    {
+                        continue;
+                    }
+
+                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
+                    if (user.Id == id)
+                        return JsonSerializer.Serialize(user);
+                }
+            }
+            return "User not found";
+        }
+
+        // POST api/<UsersController>
+        [HttpPost]
+        public IActionResult Post([FromBody] User user)
+        {
+         
+
+            if (user == null)
+    {
+                return BadRequest("Invalid user data");
+            }
+            int numberOfUsers = System.IO.File.ReadLines(Filepath).Count();
+            user.Id = numberOfUsers + 1;
+            string userJson = JsonSerializer.Serialize(user);
+            
+            System.IO.File.AppendAllText(Filepath, userJson +
+              Environment.NewLine);
+            return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+        }
+
+        //POST api/<Users>/login
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] Userin Userin)
+        {
+            using (StreamReader reader = System.IO.File.OpenText(Filepath))
+            {
+                string? currentUserInFile;
+                while ((currentUserInFile = reader.ReadLine()) != null)
+                {
+                    
+
+                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
+                    if (user.Email == Userin.Email && user.Password == Userin.Password)
+                    {
+                        return Ok(user);
+                    }
+
+                       
+                }
+            }
+            return NotFound("User not found");
+
+
+        }
+
+
+        
+
+        // PUT api/<UsersController>/5
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] User user)
+        {
+
+           string textToReplace = string.Empty; 
+            using (StreamReader reader = System.IO.File.OpenText(Filepath))
+
+            { 
+                string currentUserInFile; 
+                while ((currentUserInFile = reader.ReadLine()) != null) 
+                { 
+ 
+                    User userInFile = JsonSerializer.Deserialize<User>(currentUserInFile);
+
+                    if (userInFile.Id == id) 
+                        textToReplace = currentUserInFile; 
+                } 
+            } 
+ 
+            if (textToReplace != string.Empty) 
+            { 
+                string text = System.IO.File.ReadAllText(Filepath); 
+                text = text.Replace(textToReplace, JsonSerializer.Serialize(user));
+
+                System.IO.File.WriteAllText(Filepath, text);
+             
+                return Ok(text);
+            }
+            return NoContent();
+        }
+
+        // DELETE api/<UsersController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
+}
