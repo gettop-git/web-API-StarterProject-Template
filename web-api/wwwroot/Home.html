@@ -8,12 +8,15 @@
 </head>
 <body>
     <div id="signup">
-        
+
         <label>שם פרטי: <input class="firstname" type="text"></label><br><br>
         <label>שם משפחה: <input class="lastname" type="text"></label><br><br>
         <label>אימייל: <input class="email" type="email"></label><br><br>
         <label>סיסמה: <input class="password" type="password"></label><br><br>
-       <button type="button" onclick="AddnewUser()">הירשם</button>
+        <button type="button" onclick="CheckPassword()">בדוק חוזק סיסמה</button><br><br>
+        <progress id="passProgress" value="0" max="4"></progress><br><br>
+        <button type="button" onclick="AddnewUser()">הירשם</button>
+
     </div>
     <br />
     <div id="in">

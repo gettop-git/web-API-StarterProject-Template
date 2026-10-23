@@ -1,7 +1,12 @@
 
 
 const AddnewUser = async () => {
+    if (currentPasswordScore < 2) {
+        alert("לא ניתן להירשם. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
+        return;
+    }
     try {
+
         const FirstName = document.querySelector(".firstname").value
         const LastName = document.querySelector(".lastname").value
         const Email = document.querySelector(".email").value
@@ -34,6 +39,43 @@ const AddnewUser = async () => {
     }
 
 
+
+}
+let currentPasswordScore = 0;
+
+const CheckPassword = async () => {
+    const password = document.querySelector(".password").value
+    if (!password) {
+        alert("נא להזין סיסמא")
+        return
+    }
+    try {
+
+        const response = await fetch("api/users/password", {
+            method: 'POST',
+            body: JSON.stringify(password),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        })
+        if (!response.ok) {
+
+            throw new Error(`Error status: ${response.status}`);
+        }
+        const data = await response.json();
+        currentPasswordScore = JSON.stringify(data);
+        
+        document.querySelector("#passProgress").value = currentPasswordScore;
+        if (currentPasswordScore < 2) {
+            alert("הסיסמה חלשה מדי. אנא בחר סיסמה אחרת.");
+        }
+
+    }
+    catch (e) {
+        alert(e.message)
+    }
+    
 
 }
 
@@ -82,4 +124,5 @@ const sighinin = document.getElementById("sighnin");
 sighinin.addEventListener("click", () => {
 
     document.getElementById("signup").style.display = "block";
+    document.getElementById("in").style.display = "none";
 });

@@ -1,0 +1,16 @@
+﻿body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 10vh;
+}
+#updatedetails {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    background-color:slateblue;
+    gap: 2vh;
+    padding:3vh;
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Zxcvbn;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -86,7 +87,23 @@ namespace web_api.Controllers
         }
 
 
-        
+
+
+        // POST api/<UsersController>
+        [HttpPost("password")]
+        public IActionResult Post([FromBody] string password)
+        {
+           
+
+    
+            var result = Zxcvbn.Core.EvaluatePassword(password);
+
+            return Ok(result.Score);
+
+
+        }
+
+
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
@@ -115,7 +132,7 @@ namespace web_api.Controllers
 
                 System.IO.File.WriteAllText(Filepath, text);
              
-                return Ok(text);
+                return Ok(user);
             }
             return NoContent();
         }

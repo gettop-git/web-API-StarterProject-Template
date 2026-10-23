@@ -5,8 +5,13 @@
     min-height:100vh;
     gap:10vh;
 }
-#signup{
-    display:none
+#signup {
+    display: none;
+    //display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7vh;
+    background-color:palevioletred;
 }
 #box {
     height: 30vh;
