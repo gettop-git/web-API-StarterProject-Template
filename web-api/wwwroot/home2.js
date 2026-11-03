@@ -41,7 +41,7 @@ const UpdateUser = async () => {
         })
         if (!response.ok) {
 
-            throw new Error(`Error status: ${response.status}`);
+            throw new Error(`Error status: ${response.status} `);
         }
 
         const data = await response.json();

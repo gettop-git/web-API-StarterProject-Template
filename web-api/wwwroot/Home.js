@@ -61,7 +61,7 @@ const CheckPassword = async () => {
         })
         if (!response.ok) {
 
-            throw new Error(`Error status: ${response.status}`);
+            throw new Error(`Error status: ${response.status} , Message: ${errorText}`);
         }
         const data = await response.json();
         currentPasswordScore = JSON.stringify(data);
@@ -97,8 +97,9 @@ const SighinUser = async () => {
 
         })
         if (!response.ok) {
+            const errorText = await response.text();
            
-            throw new Error(`Error status: ${response.status}`);
+            throw new Error(`Error status: ${response.status} , Message: ${errorText}`);
         }
 
         const data = await response.json();

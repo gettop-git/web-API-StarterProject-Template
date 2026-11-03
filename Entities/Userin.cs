@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace web_api
+namespace Entities
 {
     public class Userin
     {
