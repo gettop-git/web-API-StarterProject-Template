@@ -4,10 +4,14 @@ using Zxcvbn;
 
 namespace Services
 {
-    public class UserService
+    public class UserService : IUserService
 
     {
-        UserRepo repo = new UserRepo();
+        IUserRepo repo;
+        public UserService(IUserRepo repository)
+        {
+            this.repo = repository;
+        }
         public User GetUserById(int id)
         {
             User user = repo.GetUserById(id);
@@ -31,7 +35,7 @@ namespace Services
         }
         public int CheckPassword(string password)
         {
-            var res= Zxcvbn.Core.EvaluatePassword(password);
+            var res = Zxcvbn.Core.EvaluatePassword(password);
             return res.Score;
         }
     }

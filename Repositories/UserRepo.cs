@@ -3,9 +3,9 @@ using System.Text.Json;
 
 namespace Repositories
 {
-    public class UserRepo
+    public class UserRepo : IUserRepo
     {
-    
+
         readonly string Filepath = @"..\Repositories\Data.txt";
         public User GetUserById(int id)
         {

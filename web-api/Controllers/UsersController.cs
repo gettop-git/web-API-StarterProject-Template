@@ -15,7 +15,11 @@ namespace web_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UserService userservice=new UserService();
+        IUserService userservice; 
+        public UsersController(IUserService userservice)
+        {
+            this.userservice = userservice;
+        }
         string Filepath = "Data.txt";
         // GET: api/<UsersController>
         [HttpGet]
