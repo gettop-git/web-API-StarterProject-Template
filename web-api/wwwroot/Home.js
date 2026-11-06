@@ -1,7 +1,10 @@
 
 
 const AddnewUser = async () => {
-    if (currentPasswordScore < 2) {
+    
+    const password = document.querySelector(".password").value;
+    const score = await CheckPassword(password, false);
+    if (score < 2) {
         alert("לא ניתן להירשם. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
         return;
     }
@@ -23,8 +26,8 @@ const AddnewUser = async () => {
 
         })
         if (!response.ok) {
-           
-            throw new Error(`Error status: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`Error status: ${response.status} , Message: ${errorText}`);
         }
             
         const data = await response.json();
@@ -41,43 +44,7 @@ const AddnewUser = async () => {
 
 
 }
-let currentPasswordScore = 0;
 
-const CheckPassword = async () => {
-    const password = document.querySelector(".password").value
-    if (!password) {
-        alert("נא להזין סיסמא")
-        return
-    }
-    try {
-
-        const response = await fetch("api/users/password", {
-            method: 'POST',
-            body: JSON.stringify(password),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-
-        })
-        if (!response.ok) {
-
-            throw new Error(`Error status: ${response.status} , Message: ${errorText}`);
-        }
-        const data = await response.json();
-        currentPasswordScore = JSON.stringify(data);
-        
-        document.querySelector("#passProgress").value = currentPasswordScore;
-        if (currentPasswordScore < 2) {
-            alert("הסיסמה חלשה מדי. אנא בחר סיסמה אחרת.");
-        }
-
-    }
-    catch (e) {
-        alert(e.message)
-    }
-    
-
-}
 
 
 const SighinUser = async () => {
@@ -127,3 +94,13 @@ sighinin.addEventListener("click", () => {
     document.getElementById("signup").style.display = "block";
     document.getElementById("in").style.display = "none";
 });
+
+
+
+const checkPassBtn = document.getElementById("checkPassBtn");
+if (checkPassBtn) {
+    checkPassBtn.addEventListener("click", () => {
+        const password = document.querySelector(".password").value;
+        CheckPassword(password);
+    });
+}

@@ -45,7 +45,10 @@ namespace web_api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-         
+            int score = userservice.CheckPassword(user.Password);
+            if (score < 2)
+                return BadRequest("הסיסמה חלשה מדי");
+
             User newuser=userservice.AddUser(user);
             if (newuser == null)
     {
@@ -75,19 +78,7 @@ namespace web_api.Controllers
 
 
 
-        // POST api/<UsersController>
-        [HttpPost("password")]
-        public IActionResult Post([FromBody] string password)
-        {
-           
-
-    
-            var result =userservice.CheckPassword(password);
-
-            return Ok(result);
-
-
-        }
+        
 
 
 
@@ -95,6 +86,9 @@ namespace web_api.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User user)
         {
+            int score = userservice.CheckPassword(user.Password);
+            if (score < 2)
+                return BadRequest("הסיסמה חלשה מדי");
             User updateUser=userservice.UpdateUserById(id,user);
             if(updateUser == null)
             {

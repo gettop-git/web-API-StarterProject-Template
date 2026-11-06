@@ -19,6 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 //עדכון פרטים
 const UpdateUser = async () => {
+    const password = document.querySelector(".passwordup").value;
+    const score = await CheckPassword(password, false);
+    if (score < 2) {
+        alert("לא ניתן לעדכן. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
+        return;
+    }
     try {
 
         const c_User = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -40,8 +46,8 @@ const UpdateUser = async () => {
 
         })
         if (!response.ok) {
-
-            throw new Error(`Error status: ${response.status} `);
+            const errorText = await response.text();
+            throw new Error(`Error status: ${response.status} , Message: ${errorText}`);
         }
 
         const data = await response.json();

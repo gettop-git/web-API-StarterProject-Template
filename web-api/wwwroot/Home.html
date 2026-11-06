@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="HtmlCss.css">
+    <script defer src="common.js"></script>
     <script defer src="Home.js"></script>
     <title></title>
 </head>
@@ -13,7 +14,8 @@
         <label>שם משפחה: <input class="lastname" type="text"></label><br><br>
         <label>אימייל: <input class="email" type="email"></label><br><br>
         <label>סיסמה: <input class="password" type="password"></label><br><br>
-        <button type="button" onclick="CheckPassword()">בדוק חוזק סיסמה</button><br><br>
+        <button type="button" id="checkPassBtn">בדיקת סיסמה</button>
+        <!--<button type="button" onclick="CheckPassword()">בדוק חוזק סיסמה</button><br><br>-->
         <progress id="passProgress" value="0" max="4"></progress><br><br>
         <button type="button" onclick="AddnewUser()">הירשם</button>
 
