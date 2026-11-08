@@ -3,7 +3,7 @@
 const AddnewUser = async () => {
     
     const password = document.querySelector(".password").value;
-    const score = await CheckPassword(password, false);
+    const score = await CheckPassword(password);
     if (score < 2) {
         alert("לא ניתן להירשם. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
         return;
@@ -99,8 +99,12 @@ sighinin.addEventListener("click", () => {
 
 const checkPassBtn = document.getElementById("checkPassBtn");
 if (checkPassBtn) {
-    checkPassBtn.addEventListener("click", () => {
+    checkPassBtn.addEventListener("click",async () => {
         const password = document.querySelector(".password").value;
-        CheckPassword(password);
+        const score = await CheckPassword(password);
+        if (score < 2) {
+            alert("לא ניתן להירשם. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
+            return;
+        }
     });
 }

@@ -1,4 +1,4 @@
-﻿const CheckPassword = async (password, showWeakAlert = true) => {
+﻿const CheckPassword = async (password) => {
     if (!password) {
         alert("נא להזין סיסמא");
         return 0;
@@ -18,9 +18,9 @@
         const progress = document.querySelector("#passProgress");
         if (progress) progress.value = score;
 
-        if (score < 2 && showWeakAlert) {
-            alert("הסיסמה חלשה מדי. אנא בחר סיסמה אחרת.");
-        }
+        // if (score < 2 ) {
+        //     alert("הסיסמה חלשה מדי. אנא בחר סיסמה אחרת.");
+        // }
         return score;
     }
     catch (e) {

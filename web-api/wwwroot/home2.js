@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //עדכון פרטים
 const UpdateUser = async () => {
     const password = document.querySelector(".passwordup").value;
-    const score = await CheckPassword(password, false);
+    const score = await CheckPassword(password);
     if (score < 2) {
         alert("לא ניתן לעדכן. חובה להזין סיסמה שקיבלה ציון 2 ומעלה.");
         return;
