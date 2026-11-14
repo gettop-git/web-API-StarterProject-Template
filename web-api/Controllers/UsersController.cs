@@ -62,12 +62,15 @@ namespace web_api.Controllers
 
         //POST api/<Users>/login
         [HttpPost("login")]
+        //In C#, parameters are written in camelCase too: userin
         public IActionResult Login([FromBody] Userin Userin)
         { 
+            //In C#, local variables are written in camelCase: inUser
             User InUser=userservice.UserLogIn(Userin);
           
             if(InUser == null)
             {
+                //The assignment asks a wrong login to return 204 (NoContent): what should Login return when no user matches the details?
                 return NotFound("User not found");
             }
             return Ok(InUser);
