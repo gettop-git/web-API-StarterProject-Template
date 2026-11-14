@@ -1,5 +1,6 @@
 
 
+//In JavaScript, function names are camelCase too: addNewUser (the same for SighinUser)
 const AddnewUser = async () => {
     
     const password = document.querySelector(".password").value;
@@ -31,6 +32,7 @@ const AddnewUser = async () => {
         }
             
         const data = await response.json();
+        //Is currentUserId defined anywhere? It is used here but never declared.
         currentUserId = JSON.stringify(data)
         sessionStorage.setItem("currentUser", currentUserId)
         alert(`The user ${data.firstName} - ${data.lastName} successfully added!!!!`)
