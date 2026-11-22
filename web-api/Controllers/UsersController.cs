@@ -43,6 +43,7 @@ namespace web_api.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
+        //The assignment asks a weak password (score below 3) to return 400. What minimum score does this check use? It is 2 now
         public IActionResult Post([FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
@@ -64,10 +65,12 @@ namespace web_api.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] Userin Userin)
         { 
+            //In C#, local variables are written in camelCase: inUser
             User InUser=userservice.UserLogIn(Userin);
           
             if(InUser == null)
             {
+                //The assignment asks a login with a wrong password to return 204 NoContent. What should this return instead of NotFound?
                 return NotFound("User not found");
             }
             return Ok(InUser);
@@ -84,6 +87,7 @@ namespace web_api.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
+        //The assignment asks a weak password (score below 3) to return 400 on PUT too. What minimum score does this check use? It is 2 now
         public IActionResult Put(int id, [FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
