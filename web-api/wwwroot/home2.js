@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateBtn = document.getElementById("updateBtn");
     if (updateBtn) {
         const c_User = JSON.parse(sessionStorage.getItem("currentUser"));
+        //In JavaScript, names are camelCase: cUser
         if (c_User ==null) {
             window.location.href = "home.html"; 
             return;
