@@ -20,7 +20,7 @@ namespace web_api.Controllers
         {
             this.userservice = userservice;
         }
-        string Filepath = "Data.txt";
+        //string Filepath = "Data.txt";
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -30,10 +30,10 @@ namespace web_api.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
             
-            User user=userservice.GetUserById(id);
+            User user= await userservice.GetUserById(id);
             if (user != null)
             {
                 return Ok(user);
@@ -43,13 +43,13 @@ namespace web_api.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
             if (score < 2)
                 return BadRequest("הסיסמה חלשה מדי");
 
-            User newuser=userservice.AddUser(user);
+            User newuser= await userservice.AddUser(user);
             if (newuser == null)
     {
                 return BadRequest("Invalid user data");
@@ -62,9 +62,9 @@ namespace web_api.Controllers
 
         //POST api/<Users>/login
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Userin Userin)
+        public async Task<IActionResult> Login([FromBody] Userin Userin)
         { 
-            User InUser=userservice.UserLogIn(Userin);
+            User InUser= await userservice.UserLogIn(Userin);
           
             if(InUser == null)
             {
@@ -84,12 +84,12 @@ namespace web_api.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User user)
+        public async Task<IActionResult> Put(int id, [FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
             if (score < 2)
                 return BadRequest("הסיסמה חלשה מדי");
-            User updateUser=userservice.UpdateUserById(id,user);
+            User updateUser= await userservice.UpdateUserById(id,user);
             if(updateUser == null)
             {
                 return NoContent();

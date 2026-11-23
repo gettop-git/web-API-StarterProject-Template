@@ -7,30 +7,30 @@ namespace Services
     public class UserService : IUserService
 
     {
-        IUserRepo repo;
-        public UserService(IUserRepo repository)
+        IUserRepository repo;
+        public UserService(IUserRepository repository)
         {
             this.repo = repository;
         }
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            User user = repo.GetUserById(id);
+            User user = await repo.GetUserById(id);
             return user;
         }
-        public User AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
-            User useri = repo.AddUser(user);
+            User useri = await repo.AddUser(user);
             return useri;
 
         }
-        public User UserLogIn(Userin userin)
+        public async Task<User> UserLogIn(Userin userin)
         {
-            User user = repo.UserLogIn(userin);
+            User user = await repo.FindUserByNameAndPassword(userin);
             return user;
         }
-        public User UpdateUserById(int id, User user)
+        public async Task<User> UpdateUserById(int id, User user)
         {
-            User userI = repo.UpdateUserById(id, user);
+            User userI = await repo.UpdateUserById(id, user);
             return userI;
         }
         public int CheckPassword(string password)
