@@ -4,15 +4,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const updateBtn = document.getElementById("updateBtn");
     if (updateBtn) {
-        const c_User = JSON.parse(sessionStorage.getItem("currentUser"));
-        if (c_User ==null) {
+        const cUser = JSON.parse(sessionStorage.getItem("currentUser"));
+        if (cUser ==null) {
             window.location.href = "home.html"; 
             return;
         }
-        document.querySelector(".firstnameup").value = c_User.firstName
-        document.querySelector(".lastnameup").value = c_User.lastName
-        document.querySelector(".passwordup").value = c_User.password
-        document.querySelector(".emailup").value = c_User.email
+        document.querySelector(".firstnameup").value = cUser.firstName
+        document.querySelector(".lastnameup").value = cUser.lastName
+        document.querySelector(".passwordup").value = cUser.password
+        document.querySelector(".emailup").value = cUser.email
         updateBtn.addEventListener("click", UpdateUser);
     }
    
@@ -45,6 +45,7 @@ const UpdateUser = async () => {
             }
 
         })
+
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Error status: ${response.status} , Message: ${errorText}`);

@@ -46,12 +46,12 @@ namespace web_api.Controllers
         public async Task<IActionResult> Post([FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
-            if (score < 2)
+            if (score < 3)
                 return BadRequest("הסיסמה חלשה מדי");
 
             User newuser= await userservice.AddUser(user);
             if (newuser == null)
-    {
+            {
                 return BadRequest("Invalid user data");
             }
             
@@ -62,15 +62,15 @@ namespace web_api.Controllers
 
         //POST api/<Users>/login
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Userin Userin)
+        public async Task<IActionResult> Login([FromBody] Userin userin)
         { 
-            User InUser= await userservice.UserLogIn(Userin);
+            User inUser= await userservice.UserLogIn(userin);
           
-            if(InUser == null)
+            if(inUser == null)
             {
-                return NotFound("User not found");
+                return NoContent();
             }
-            return Ok(InUser);
+            return Ok(inUser);
 
 
         }
@@ -87,7 +87,7 @@ namespace web_api.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
-            if (score < 2)
+            if (score < 3)
                 return BadRequest("הסיסמה חלשה מדי");
             User updateUser= await userservice.UpdateUserById(id,user);
             if(updateUser == null)

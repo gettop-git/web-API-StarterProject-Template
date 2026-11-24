@@ -1,6 +1,6 @@
 
-
-const AddnewUser = async () => {
+let currentUserId;
+const addNewUser = async () => {
     
     const password = document.querySelector(".password").value;
     const score = await CheckPassword(password);
@@ -47,7 +47,7 @@ const AddnewUser = async () => {
 
 
 
-const SighinUser = async () => {
+const sighinUser = async () => {
     try {
         
         const Email = document.querySelector(".emailcomin").value
@@ -63,6 +63,9 @@ const SighinUser = async () => {
             }
 
         })
+        if (response.status === 204) {
+            throw new Error("לא נמצאו נתונים");
+        }
         if (!response.ok) {
             const errorText = await response.text();
            
