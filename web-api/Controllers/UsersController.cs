@@ -15,10 +15,14 @@ namespace web_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        ILogger<UsersController> logger;
         IUserService userservice; 
-        public UsersController(IUserService userservice)
+        IConfiguration configuration;
+        public UsersController(IUserService userservice, IConfiguration configuration, ILogger<UsersController> logger)
         {
+            this.logger=logger;
             this.userservice = userservice;
+            this.configuration = configuration;
         }
         //string Filepath = "Data.txt";
         // GET: api/<UsersController>
@@ -46,7 +50,7 @@ namespace web_api.Controllers
         public async Task<IActionResult> Post([FromBody] User user)
         {
             int score = userservice.CheckPassword(user.Password);
-            if (score < 3)
+            if (score < configuration.GetValue<int>("password",3))
                 return BadRequest("הסיסמה חלשה מדי");
 
             User newuser= await userservice.AddUser(user);
@@ -70,6 +74,7 @@ namespace web_api.Controllers
             {
                 return NoContent();
             }
+            logger.LogInformation("user succesfully login");
             return Ok(inUser);
 
 

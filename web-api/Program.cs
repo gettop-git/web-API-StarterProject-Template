@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repositories;
 using Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -13,7 +14,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 //builder.Services.AddDbContext<MyStorDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString(
 //    "Data Source=srv2\\pupils;Initial Catalog=MyStorDB;Integrated Security=True;Trust Server Certificate=True")), ServiceLifetime.Transient);
 builder.Services.AddDbContext<MyStorDBContext>(options => options.UseSqlServer(
-    "Data Source=localhost;Initial Catalog=MyStorDB;Integrated Security=True;Trust Server Certificate=True"), ServiceLifetime.Transient);
+    builder.Configuration.GetConnectionString("school")));
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<ICategoriesRepository, CategoriesRepository>();
@@ -21,11 +22,13 @@ builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddOpenApi();
+builder.Host.UseNLog();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsEnvironment("School"))
 {
     app.MapOpenApi();
     app.UseSwaggerUI(options =>

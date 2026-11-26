@@ -13,9 +13,9 @@ namespace Services
         {
             this.repo = repository;
         }
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProducts(string? name, int? minPrice, int? maxPrice, string? desc,  int[]? categoriesId, int position = 1, int skip = 8)
         {
-            return await repo.GetAllProducts();
+            return await repo.GetAllProducts(name, minPrice, maxPrice, desc, categoriesId, position, skip);
         }
     }
 }

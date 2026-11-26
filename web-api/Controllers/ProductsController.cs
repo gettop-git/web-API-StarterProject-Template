@@ -17,10 +17,10 @@ namespace web_api.Controllers
         }
         // GET: api/<ProductsController>
         [HttpGet]
-        public async Task<IEnumerable<Product>> Get()
+        public async Task<IEnumerable<Product>> Get( string? name, int? minPrice, int? maxPrice, string? desc,  [FromQuery] int[]? categoriesId ,int position = 1, int skip = 8)
         {
 
-            return await productsservice.GetAllProducts();
+            return await productsservice.GetAllProducts(name,minPrice,maxPrice,desc, categoriesId, position,skip);
         }
 
         // GET api/<ProductsController>/5
